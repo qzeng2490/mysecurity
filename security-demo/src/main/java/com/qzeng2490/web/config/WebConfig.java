@@ -3,15 +3,18 @@
  */
 package com.qzeng2490.web.config;
 
+import com.qzeng2490.security.MyUserDetailsService;
 import com.qzeng2490.web.filter.TimeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.web.cors.CorsUtils;
@@ -25,12 +28,13 @@ import java.util.List;
  * @author zhailiang
  *
  */
-@EnableWebSecurity
-@Configuration
+//@EnableWebSecurity
+//@Configuration
 public class WebConfig extends WebSecurityConfigurerAdapter {
 	private final String[] patterns = new String[]{
 					"/user/*"
 	};
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// For example: Use only Http Basic and not form login.
@@ -49,8 +53,8 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
 //	}
 
 
-	@Bean
-	public static NoOpPasswordEncoder passwordEncoder() {
-		return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
-	}
+//	@Bean
+//	public static NoOpPasswordEncoder passwordEncoder() {
+//		return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
+//	}
 }

@@ -3,12 +3,11 @@
  */
 package com.qzeng2490.security.core.properties;
 
-import org.springframework.boot.autoconfigure.social.SocialProperties;
 /**
  * @author zhailiang
  *
  */
-public class QQProperties extends SocialProperties {
+public class QQProperties extends DefaultSocialProperties {
 	
 	private String providerId = "qq";
 

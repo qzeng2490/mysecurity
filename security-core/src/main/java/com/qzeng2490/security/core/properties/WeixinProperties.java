@@ -2,13 +2,13 @@
  * 
  */
 package com.qzeng2490.security.core.properties;
-import org.springframework.boot.autoconfigure.social.SocialProperties;
+
 
 /**
  * @author zhailiang
  *
  */
-public class WeixinProperties extends SocialProperties {
+public class WeixinProperties extends DefaultSocialProperties {
 	
 	/**
 	 * 第三方id，用来决定发起第三方登录的url，默认是 weixin。

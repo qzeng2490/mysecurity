@@ -38,5 +38,5 @@ public class SocialProperties {
 	public void setWeixin(WeixinProperties weixin) {
 		this.weixin = weixin;
 	}
-	
+
 }
