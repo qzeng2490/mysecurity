@@ -26,7 +26,6 @@ public class User {
 	@ApiModelProperty(value = "用户名")
 	private String username;
 	
-	@NotBlank(message = "密码不能为空")
 	private String password;
 	
 	@Past(message = "生日必须是过去的时间")

@@ -28,7 +28,7 @@ import java.util.Date;
 @RequestMapping("/file")
 public class FileController {
 
-	private String folder = "/Users/zhailiang/Documents/my/muke/inaction/java/workspace/github/imooc-security-demo/src/main/java/com/imooc/web/controller";
+	private String folder = "/Users/zengqiang/Desktop/mysecurity/security-demo/src/main/java/com/qzeng2490/web/controller";
 
 	@PostMapping
 	public FileInfo upload(MultipartFile file) throws Exception {

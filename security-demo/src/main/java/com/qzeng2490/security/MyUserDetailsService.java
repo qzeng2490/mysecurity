@@ -25,7 +25,7 @@ public class MyUserDetailsService implements UserDetailsService, SocialUserDetai
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
-	@Autowired(required=false)
+	@Autowired
 	private PasswordEncoder passwordEncoder;
 
 	/*

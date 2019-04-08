@@ -6,6 +6,7 @@ package com.qzeng2490.web.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.qzeng2490.dto.User;
 import com.qzeng2490.dto.UserQueryCondition;
+import com.qzeng2490.exception.UserNotExistException;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
@@ -56,7 +57,7 @@ public class UserController {
 		return user;
 	}
 
-	@PostMapping
+	@PostMapping("/create")
 	@ApiOperation(value = "创建用户")
 	public User create(@Valid @RequestBody User user) {
 
@@ -108,8 +109,8 @@ public class UserController {
 	@GetMapping("/{id:\\d+}")
 	@JsonView(User.UserDetailView.class)
 	public User getInfo(@ApiParam("用户id") @PathVariable String id) {
-//		throw new RuntimeException("user not exist");
-		System.out.println("进入getInfo服务");
+//		throw new UserNotExistException(id);
+//		System.out.println("进入getInfo服务");
 		User user = new User();
 		user.setUsername("tom");
 		return user;
