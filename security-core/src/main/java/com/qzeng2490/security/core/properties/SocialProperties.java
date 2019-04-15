@@ -15,6 +15,8 @@ public class SocialProperties {
 	
 	private WeixinProperties weixin = new WeixinProperties();
 
+	private GithubProperties github = new GithubProperties();
+
 	public QQProperties getQq() {
 		return qq;
 	}
@@ -39,4 +41,11 @@ public class SocialProperties {
 		this.weixin = weixin;
 	}
 
+	public GithubProperties getGithub() {
+		return github;
+	}
+
+	public void setGithub(GithubProperties github) {
+		this.github = github;
+	}
 }
