@@ -7,10 +7,13 @@ package com.qzeng2490.security.core.social.github.config;
 import com.qzeng2490.security.core.properties.GithubProperties;
 import com.qzeng2490.security.core.properties.QQProperties;
 import com.qzeng2490.security.core.properties.SecurityProperties;
+import com.qzeng2490.security.core.social.ImoocConnectView;
 import com.qzeng2490.security.core.social.github.connet.GithubOAuth2ConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.social.UserIdSource;
@@ -20,6 +23,7 @@ import org.springframework.social.connect.ConnectionFactory;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.security.AuthenticationNameUserIdSource;
+import org.springframework.web.servlet.View;
 
 /**
  * @author zhailiang
@@ -56,6 +60,12 @@ public class GithubAutoConfig extends SocialConfigurerAdapter {
 	@Override
 	public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
 		return null;
+	}
+
+	@Bean({"connect/githubConnect", "connect/githubConnected"})
+	@ConditionalOnMissingBean(name = "githubConnectedView")
+	public View githubConnectedView() {
+		return new ImoocConnectView();
 	}
 
 }

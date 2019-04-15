@@ -7,7 +7,6 @@ package com.qzeng2490.security.core.social.weixin.config;
 import com.qzeng2490.security.core.properties.SecurityProperties;
 import com.qzeng2490.security.core.properties.WeixinProperties;
 import com.qzeng2490.security.core.social.ImoocConnectView;
-import com.qzeng2490.security.core.social.weixin.connect.WeixinConnectionFactory;
 import com.qzeng2490.security.core.social.weixin.connect.WeixinOAuth2ConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
