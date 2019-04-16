@@ -23,6 +23,7 @@ public class ImoocSpringSocialConfigurer extends SpringSocialConfigurer {
 	protected <T> T postProcess(T object) {
 		SocialAuthenticationFilter filter = (SocialAuthenticationFilter) super.postProcess(object);
 		filter.setFilterProcessesUrl(filterProcessesUrl);
+		filter.setConnectionAddedRedirectUrl("/index");
 		return (T) filter;
 	}
 

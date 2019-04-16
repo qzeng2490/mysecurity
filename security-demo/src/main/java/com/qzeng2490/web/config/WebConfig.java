@@ -19,6 +19,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.util.ArrayList;
@@ -29,29 +31,39 @@ import java.util.List;
  *
  */
 //@EnableWebSecurity
-//@Configuration
-public class WebConfig extends WebSecurityConfigurerAdapter {
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
 	private final String[] patterns = new String[]{
 					"/user/*"
 	};
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		// For example: Use only Http Basic and not form login.
-		http.authorizeRequests()
-						.requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-						.antMatchers(patterns).permitAll()
-						.antMatchers(HttpMethod.POST, "/user/create").permitAll()
-						.anyRequest().authenticated()
-						.and()
-						.httpBasic();
-	}
+//	@Override
+//	protected void configure(HttpSecurity http) throws Exception {
+//		// For example: Use only Http Basic and not form login.
+//		http.authorizeRequests()
+//						.requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+//						.antMatchers(patterns).permitAll()
+//						.antMatchers(HttpMethod.POST, "/user/create").permitAll()
+//						.anyRequest().authenticated()
+//						.and()
+//						.httpBasic();
+//	}
 
 //	@Bean
 //	public static BCryptPasswordEncoder passwordEncoder() {
 //		return new BCryptPasswordEncoder();
 //	}
 
+	@Override
+	public void addViewControllers(ViewControllerRegistry registry) {
+		// forward requests to /admin and /user to their index.html
+//		registry.addViewController("/admin").setViewName(
+//						"forward:/admin/index.html");
+//		registry.addViewController("/user").setViewName(
+//						"forward:/user/index.html");
+
+		registry.addViewController("/").setViewName("forward:/index.html");
+	}
 
 //	@Bean
 //	public static NoOpPasswordEncoder passwordEncoder() {
