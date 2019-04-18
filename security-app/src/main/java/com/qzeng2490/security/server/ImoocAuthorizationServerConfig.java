@@ -55,8 +55,7 @@ public class ImoocAuthorizationServerConfig extends AuthorizationServerConfigure
 	@Autowired
 	private SecurityProperties securityProperties;
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+
 	/**
 	 * 认证及token配置
 	 */
@@ -82,7 +81,19 @@ public class ImoocAuthorizationServerConfig extends AuthorizationServerConfigure
 	 */
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
 		security.tokenKeyAccess("permitAll()")
-						.passwordEncoder(passwordEncoder)
+						.passwordEncoder(new PasswordEncoder() {
+							@Override
+							public String encode(CharSequence charSequence) {
+								// 密码加密
+								return null;
+							}
+
+							@Override
+							public boolean matches(CharSequence charSequence, String s) {
+								// 密码校验
+								return true;
+							}
+						})
 						.allowFormAuthenticationForClients();
 	}
 
