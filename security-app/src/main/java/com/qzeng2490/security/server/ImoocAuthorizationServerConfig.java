@@ -10,9 +10,11 @@ import com.qzeng2490.security.core.properties.OAuth2ClientProperties;
 import com.qzeng2490.security.core.properties.SecurityProperties;
 import org.apache.commons.lang.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.builders.InMemoryClientDetailsServiceBuilder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -53,6 +55,8 @@ public class ImoocAuthorizationServerConfig extends AuthorizationServerConfigure
 	@Autowired
 	private SecurityProperties securityProperties;
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	/**
 	 * 认证及token配置
 	 */
@@ -77,7 +81,9 @@ public class ImoocAuthorizationServerConfig extends AuthorizationServerConfigure
 	 * tokenKey的访问权限表达式配置
 	 */
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-		security.tokenKeyAccess("permitAll()");
+		security.tokenKeyAccess("permitAll()")
+						.passwordEncoder(passwordEncoder)
+						.allowFormAuthenticationForClients();
 	}
 
 	/**

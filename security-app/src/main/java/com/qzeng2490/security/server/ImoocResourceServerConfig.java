@@ -60,7 +60,7 @@ public class ImoocResourceServerConfig extends ResourceServerConfigurerAdapter {
 		
 		http.apply(validateCodeSecurityConfig)
 				.and()
-			.apply(smsCodeAuthenticationSecurityConfig)
+		    .apply(smsCodeAuthenticationSecurityConfig)
 				.and()
 			.apply(imoocSocialSecurityConfig)
 				.and()
