@@ -4,6 +4,8 @@
 package com.qzeng2490.security.core.social;
 
 import com.qzeng2490.security.core.properties.SecurityProperties;
+import com.qzeng2490.security.core.social.support.ImoocSpringSocialConfigurer;
+import com.qzeng2490.security.core.social.support.SocialAuthenticationFilterPostProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,6 +38,9 @@ public class SocialConfig extends SocialConfigurerAdapter {
 	@Autowired(required = false)
 	private ConnectionSignUp connectionSignUp;
 
+	@Autowired(required = false)
+	private SocialAuthenticationFilterPostProcessor socialAuthenticationFilterPostProcessor;
+
 	@Override
 	public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
 		JdbcUsersConnectionRepository repository = new JdbcUsersConnectionRepository(dataSource,
@@ -52,6 +57,7 @@ public class SocialConfig extends SocialConfigurerAdapter {
 		String filterProcessesUrl = securityProperties.getSocial().getFilterProcessesUrl();
 		ImoocSpringSocialConfigurer configurer = new ImoocSpringSocialConfigurer(filterProcessesUrl);
 		configurer.signupUrl(securityProperties.getBrowser().getSignUpUrl());
+		configurer.setSocialAuthenticationFilterPostProcessor(socialAuthenticationFilterPostProcessor);
 		return configurer;
 	}
 

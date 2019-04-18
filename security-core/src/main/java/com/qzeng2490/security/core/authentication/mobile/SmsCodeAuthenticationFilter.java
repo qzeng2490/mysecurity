@@ -29,14 +29,14 @@ public class SmsCodeAuthenticationFilter extends AbstractAuthenticationProcessin
 	// ===================================================================================================
 
 	public SmsCodeAuthenticationFilter() {
-		super(new AntPathRequestMatcher(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE, "POST"));
+		super(new AntPathRequestMatcher(SecurityConstants.DEFAULT_SIGN_IN_PROCESSING_URL_MOBILE, "POST"));
 	}
 
 	// ~ Methods
 	// ========================================================================================================
 
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-			throws AuthenticationException {
+					throws AuthenticationException {
 		if (postOnly && !request.getMethod().equals("POST")) {
 			throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
 		}

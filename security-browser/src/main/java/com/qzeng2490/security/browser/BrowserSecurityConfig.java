@@ -4,19 +4,18 @@
 package com.qzeng2490.security.browser;
 
 
-import com.qzeng2490.security.core.authentication.AbstractChannelSecurityConfig;
+import com.qzeng2490.security.core.authentication.FormAuthenticationConfig;
 import com.qzeng2490.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
+import com.qzeng2490.security.core.authorize.AuthorizeConfigManager;
 import com.qzeng2490.security.core.code.ValidateCodeSecurityConfig;
-import com.qzeng2490.security.core.properties.SecurityConstants;
 import com.qzeng2490.security.core.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.session.InvalidSessionStrategy;
@@ -30,80 +29,80 @@ import javax.sql.DataSource;
  *
  */
 @Configuration
-public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
+public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private SecurityProperties securityProperties;
-	
+
 	@Autowired
 	private DataSource dataSource;
-	
+
 	@Autowired
 	private UserDetailsService userDetailsService;
-	
+
 	@Autowired
 	private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
-	
+
 	@Autowired
 	private ValidateCodeSecurityConfig validateCodeSecurityConfig;
-	
+
 	@Autowired
 	private SpringSocialConfigurer imoocSocialSecurityConfig;
-	
+
 	@Autowired
 	private SessionInformationExpiredStrategy sessionInformationExpiredStrategy;
-	
+
 	@Autowired
 	private InvalidSessionStrategy invalidSessionStrategy;
-	
+
+	@Autowired
+	private LogoutSuccessHandler logoutSuccessHandler;
+
+	@Autowired
+	private AuthorizeConfigManager authorizeConfigManager;
+
+	@Autowired
+	private FormAuthenticationConfig formAuthenticationConfig;
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		
-		applyPasswordAuthenticationConfig(http);
-		
+
+		formAuthenticationConfig.configure(http);
+
 		http.apply(validateCodeSecurityConfig)
-				.and()
-			.apply(smsCodeAuthenticationSecurityConfig)
-				.and()
-			.apply(imoocSocialSecurityConfig)
-				.and()
-			.rememberMe()
-				.tokenRepository(persistentTokenRepository())
-				.tokenValiditySeconds(securityProperties.getBrowser().getRememberMeSeconds())
-				.userDetailsService(userDetailsService)
-				.and()
-			.sessionManagement()
-				.invalidSessionStrategy(invalidSessionStrategy)
-				.maximumSessions(securityProperties.getBrowser().getSession().getMaximumSessions())
-				.maxSessionsPreventsLogin(securityProperties.getBrowser().getSession().isMaxSessionsPreventsLogin())
-				.expiredSessionStrategy(sessionInformationExpiredStrategy)
-				.and()
-				.and()
-			.authorizeRequests()
-				.antMatchers(
-					SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
-					SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
-					securityProperties.getBrowser().getLoginPage(),
-					SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*",
-					securityProperties.getBrowser().getSignUpUrl(),
-					securityProperties.getBrowser().getSession().getSessionInvalidUrl()+".json",
-					securityProperties.getBrowser().getSession().getSessionInvalidUrl()+".html",
-					"/user/regist", "/weixin/verify"	)
-					.permitAll()
-				.anyRequest()
-				.authenticated()
-				.and()
-			.csrf().disable();
-		
+						.and()
+						.apply(smsCodeAuthenticationSecurityConfig)
+						.and()
+						.apply(imoocSocialSecurityConfig)
+						.and()
+						//记住我配置，如果想在'记住我'登录时记录日志，可以注册一个InteractiveAuthenticationSuccessEvent事件的监听器
+						.rememberMe()
+						.tokenRepository(persistentTokenRepository())
+						.tokenValiditySeconds(securityProperties.getBrowser().getRememberMeSeconds())
+						.userDetailsService(userDetailsService)
+						.and()
+						.sessionManagement()
+						.invalidSessionStrategy(invalidSessionStrategy)
+						.maximumSessions(securityProperties.getBrowser().getSession().getMaximumSessions())
+						.maxSessionsPreventsLogin(securityProperties.getBrowser().getSession().isMaxSessionsPreventsLogin())
+						.expiredSessionStrategy(sessionInformationExpiredStrategy)
+						.and()
+						.and()
+						.logout()
+						.logoutUrl("/signOut")
+						.logoutSuccessHandler(logoutSuccessHandler)
+						.deleteCookies("JSESSIONID")
+						.and()
+						.csrf().disable();
+
+		authorizeConfigManager.config(http.authorizeRequests());
+
 	}
 
-	@Bean
-	public static BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-
-
-
+	/**
+	 * 记住我功能的token存取器配置
+	 * @return
+	 */
 	@Bean
 	public PersistentTokenRepository persistentTokenRepository() {
 		JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
@@ -111,5 +110,5 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
 //		tokenRepository.setCreateTableOnStartup(true);
 		return tokenRepository;
 	}
-	
+
 }

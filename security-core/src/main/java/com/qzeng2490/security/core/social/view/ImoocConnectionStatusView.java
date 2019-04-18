@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.qzeng2490.security.core.social;
+package com.qzeng2490.security.core.social.view;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.collections.CollectionUtils;

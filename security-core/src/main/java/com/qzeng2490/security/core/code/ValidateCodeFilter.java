@@ -61,16 +61,16 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
 	public void afterPropertiesSet() throws ServletException {
 		super.afterPropertiesSet();
 
-		urlMap.put(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_FORM, ValidateCodeType.IMAGE);
+		urlMap.put(SecurityConstants.DEFAULT_SIGN_IN_PROCESSING_URL_FORM, ValidateCodeType.IMAGE);
 		addUrlToMap(securityProperties.getCode().getImage().getUrl(), ValidateCodeType.IMAGE);
 
-		urlMap.put(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE, ValidateCodeType.SMS);
+		urlMap.put(SecurityConstants.DEFAULT_SIGN_IN_PROCESSING_URL_MOBILE, ValidateCodeType.SMS);
 		addUrlToMap(securityProperties.getCode().getSms().getUrl(), ValidateCodeType.SMS);
 	}
 
 	/**
 	 * 讲系统中配置的需要校验验证码的URL根据校验的类型放入map
-	 * 
+	 *
 	 * @param urlString
 	 * @param type
 	 */
@@ -85,7 +85,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.springframework.web.filter.OncePerRequestFilter#doFilterInternal(
 	 * javax.servlet.http.HttpServletRequest,
@@ -93,14 +93,14 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
 	 */
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
-			throws ServletException, IOException {
+					throws ServletException, IOException {
 
 		ValidateCodeType type = getValidateCodeType(request);
 		if (type != null) {
 			logger.info("校验请求(" + request.getRequestURI() + ")中的验证码,验证码类型" + type);
 			try {
 				validateCodeProcessorHolder.findValidateCodeProcessor(type)
-						.validate(new ServletWebRequest(request, response));
+								.validate(new ServletWebRequest(request, response));
 				logger.info("验证码校验通过");
 			} catch (ValidateCodeException exception) {
 				authenticationFailureHandler.onAuthenticationFailure(request, response, exception);
@@ -114,7 +114,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
 
 	/**
 	 * 获取校验码的类型，如果当前请求不需要校验，则返回null
-	 * 
+	 *
 	 * @param request
 	 * @return
 	 */

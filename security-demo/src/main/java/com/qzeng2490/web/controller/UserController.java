@@ -7,6 +7,10 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.qzeng2490.dto.User;
 import com.qzeng2490.dto.UserQueryCondition;
 import com.qzeng2490.exception.UserNotExistException;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
@@ -32,6 +36,7 @@ import org.springframework.web.context.request.ServletWebRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,11 +58,19 @@ public class UserController {
 		String userId = user.getUsername();
 		providerSignInUtils.doPostSignUp(userId, new ServletWebRequest(request));
 	}
-	
+
 	@GetMapping("/me")
-	public Object getCurrentUser(@AuthenticationPrincipal UserDetails user) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		System.out.println(auth);
+	public Object getCurrentUser(Authentication user, HttpServletRequest request) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, SignatureException, IllegalArgumentException, UnsupportedEncodingException {
+
+//		String token = StringUtils.substringAfter(request.getHeader("Authorization"), "bearer ");
+//
+//		Claims claims = Jwts.parser().setSigningKey(securityProperties.getOauth2().getJwtSigningKey().getBytes("UTF-8"))
+//					.parseClaimsJws(token).getBody();
+//
+//		String company = (String) claims.get("company");
+//
+//		System.out.println(company);
+
 		return user;
 	}
 

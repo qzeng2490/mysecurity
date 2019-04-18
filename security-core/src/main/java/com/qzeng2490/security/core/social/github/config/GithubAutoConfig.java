@@ -5,9 +5,8 @@ package com.qzeng2490.security.core.social.github.config;
 
 
 import com.qzeng2490.security.core.properties.GithubProperties;
-import com.qzeng2490.security.core.properties.QQProperties;
 import com.qzeng2490.security.core.properties.SecurityProperties;
-import com.qzeng2490.security.core.social.ImoocConnectView;
+import com.qzeng2490.security.core.social.view.ImoocConnectView;
 import com.qzeng2490.security.core.social.github.connet.GithubOAuth2ConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

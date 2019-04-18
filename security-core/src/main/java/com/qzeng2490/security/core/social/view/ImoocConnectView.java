@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.qzeng2490.security.core.social;
+package com.qzeng2490.security.core.social.view;
 
 import org.springframework.web.servlet.view.AbstractView;
 

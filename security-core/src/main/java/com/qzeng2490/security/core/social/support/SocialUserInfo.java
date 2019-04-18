@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.qzeng2490.security.browser.support;
+package com.qzeng2490.security.core.social.support;
 
 /**
  * @author zhailiang
