@@ -21,16 +21,16 @@
     </properties>
 
     <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>qzeng2490</groupId>-->
-<!--            <artifactId>security-browser</artifactId>-->
-<!--            <version>${qzeng2490.security.version}</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>qzeng2490</groupId>
-            <artifactId>security-app</artifactId>
+            <artifactId>security-browser</artifactId>
             <version>${qzeng2490.security.version}</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>qzeng2490</groupId>-->
+<!--            <artifactId>security-app</artifactId>-->
+<!--            <version>${qzeng2490.security.version}</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
