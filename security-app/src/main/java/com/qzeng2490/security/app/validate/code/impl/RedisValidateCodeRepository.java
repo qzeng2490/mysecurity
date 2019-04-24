@@ -59,7 +59,7 @@ public class RedisValidateCodeRepository implements ValidateCodeRepository {
 	public static final String DEFAULT_TIME_FORMAT = "HH:mm:ss";
 
 	@Bean
-	public RedisTemplate<String, ?> redisTemplate(RedisConnectionFactory factory) {
+	public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
 //		RedisTemplate<String, Object> redisTemplate = new RedisTemplate();
 //		redisTemplate.setConnectionFactory(factory);
 //		RedisSerializer<String> stringRedisSerializer = new StringRedisSerializer();

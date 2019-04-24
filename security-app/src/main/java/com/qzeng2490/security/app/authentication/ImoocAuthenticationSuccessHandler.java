@@ -65,17 +65,19 @@ public class ImoocAuthenticationSuccessHandler extends SavedRequestAwareAuthenti
 
 		logger.info("登录成功");
 
-		String header = request.getHeader("Authorization");
+//		String header = request.getHeader("Authorization");
+//
+//		if (header == null || !header.startsWith("Basic ")) {
+//			throw new UnapprovedClientAuthenticationException("请求头中无client信息");
+//		}
+//
+//		String[] tokens = extractAndDecodeHeader(header, request);
+//		assert tokens.length == 2;
 
-		if (header == null || !header.startsWith("Basic ")) {
-			throw new UnapprovedClientAuthenticationException("请求头中无client信息");
-		}
-
-		String[] tokens = extractAndDecodeHeader(header, request);
-		assert tokens.length == 2;
-
-		String clientId = tokens[0];
-		String clientSecret = tokens[1];
+//		String clientId = tokens[0];
+//		String clientSecret = tokens[1];
+		String clientId = "imooc";
+		String clientSecret = "imoocsecret";
 
 		ClientDetails clientDetails = clientDetailsService.loadClientByClientId(clientId);
 
