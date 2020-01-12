@@ -29,6 +29,11 @@ public class ImoocAuthorizeConfigProvider implements AuthorizeConfigProvider {
 	public boolean config(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry config) {
 		config.antMatchers(SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
 				SecurityConstants.DEFAULT_SIGN_IN_PROCESSING_URL_MOBILE,
+				SecurityConstants.DEFAULT_SWAGGER_UI_URL,
+				"/v2/api-docs",
+				"/swagger-resources",
+				"/swagger-resources/configuration/ui",
+				"/swagger-resources/configuration/security",
 				SecurityConstants.DEFAULT_SIGN_IN_PROCESSING_URL_OPENID,
 				SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*",
 				securityProperties.getBrowser().getSignInPage(), 

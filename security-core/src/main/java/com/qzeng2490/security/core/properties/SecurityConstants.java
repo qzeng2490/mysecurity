@@ -31,6 +31,9 @@ public interface SecurityConstants {
 	 * 默认的OPENID登录请求处理url
 	 */
 	String DEFAULT_SIGN_IN_PROCESSING_URL_OPENID = "/authentication/openid";
+
+	String DEFAULT_SWAGGER_UI_URL = "/swagger-ui.html";
+
 	/**
 	 * 默认登录页面
 	 *
