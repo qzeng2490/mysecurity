@@ -3,6 +3,7 @@
  */
 package com.qzeng2490.web.config;
 
+import com.google.common.base.Predicates;
 import com.qzeng2490.security.MyUserDetailsService;
 import com.qzeng2490.web.filter.TimeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,10 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +41,16 @@ public class WebConfig implements WebMvcConfigurer {
 	private final String[] patterns = new String[]{
 					"/user/*"
 	};
+
+	@Bean
+	public Docket api() {
+		return new Docket(DocumentationType.SWAGGER_2)
+				.select()
+				.apis(RequestHandlerSelectors.any())
+				.paths(PathSelectors.any())
+				.paths(Predicates.not(PathSelectors.regex("/error.*")))
+				.build();
+	}
 
 //	@Override
 //	protected void configure(HttpSecurity http) throws Exception {
