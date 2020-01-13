@@ -64,7 +64,8 @@ public class GithubAutoConfig extends SocialConfigurerAdapter {
 	@Bean({"connect/Connect", "connect/Connected"})
 	@ConditionalOnMissingBean(name = "githubConnectedView")
 	public View githubConnectedView() {
-		return new ImoocConnectView();
+		View res = new ImoocConnectView();
+		return res;
 	}
 
 }
